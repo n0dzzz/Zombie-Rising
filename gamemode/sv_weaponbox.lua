@@ -1,9 +1,7 @@
 util.AddNetworkString("OpenInteraction")
 util.AddNetworkString("RecieveWeapon")
 
-AddCSLuaFile("autorun/server/sv_money.lua")
-include("autorun/shared.lua")
-include("autorun/server/sv_money.lua")
+include("shared.lua")
 
 local CanUse = true
 
