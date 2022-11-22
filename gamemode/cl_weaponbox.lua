@@ -1,4 +1,5 @@
 include("shared.lua")
+AddCSLuaFile( "cl_init.lua" )
 
 local Items = 
 {
