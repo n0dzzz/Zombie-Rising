@@ -2,7 +2,6 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 
 include( "shared.lua" )
-include( "sv_money.lua" )
 
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
     

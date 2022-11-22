@@ -1,6 +1,6 @@
 DeriveGamemode( "sandbox" )
 
-GM.Name = "Strike Team"
+GM.Name = "Zombie Surival"
 GM.Author = "GrandmaSocks"
 GM.Email = "grandmasocksbuisness@gmail.com"
 
