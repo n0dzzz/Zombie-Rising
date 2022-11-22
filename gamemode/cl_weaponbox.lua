@@ -1,6 +1,4 @@
-AddCSLuaFile("sv_money.lua")
 include("shared.lua")
-include("sv_money.lua")
 
 local Player = LocalPlayer()
 
@@ -107,10 +105,10 @@ local function CreateGui()
         ItemButton:SetColor(Color(0,150,53))
 
         function ItemButton:DoClick()
-            if LocalPlayer():GetMoney() >= v[#v] then
+            if LocalPlayer():GetNWInt("MoneyAmount") >= v[#v] then
                 for index,weapon in pairs(LocalPlayer():GetWeapons()) do
                     if weapon:GetClass() == v[2] then
-                        notification.AddLegacy("You don't have enough money for that", 2, 2)
+                        notification.AddLegacy("You already have that weapon.", 2, 2)
                         surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
                     end
                 end
@@ -133,10 +131,7 @@ net.Receive("OpenInteraction", function()
     CreateGui()
 end)
 
-hook.Add( "HUDPaint", "Interaction", function()
-    if not LocalPlayer():IsValid() then return end
-    if not IsValid(LocalPlayer():GetEyeTrace()) then return end
-
+hook.Add("HUDPaint", "Interaction", function()
     if LocalPlayer():GetEyeTrace().Entity:GetModel() == "models/items/ammocrate_ar2.mdl" && LocalPlayer():GetPos():Distance(LocalPlayer():GetEyeTrace().Entity:GetPos()) <= 100 then
         draw.DrawText( "Use your interaction key to open the menu! ", "TargetID", ScrW() * 0.5, ScrH() * 0.5, color_white, TEXT_ALIGN_CENTER )
     end
