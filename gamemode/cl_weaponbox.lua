@@ -1,8 +1,18 @@
-include("autorun/shared.lua")
+AddCSLuaFile("sv_money.lua")
+include("shared.lua")
+include("sv_money.lua")
 
 local Player = LocalPlayer()
 
-local Items = {{"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",200},{"models/viper/mw/weapons/v_crossbow.mdl","Crossbow",500}}
+local Items = 
+{
+    {"models/Items/BoxSRounds.mdl","item_ammo_pistol_large","Pistol Ammo",150},
+    {"models/Items/BoxMRounds.mdl","item_ammo_smg1_large","SMG Ammo",300},
+    {"models/Items/BoxMRounds.mdl","item_ammo_ar2_large","AR Ammo",500},
+    {"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",1500},
+    {"models/viper/mw/weapons/w_akilo47.mdl","mg_augolf","AK47",3000},
+}
+
 local LabelFont = surface.CreateFont("LabelFont", {
     font = "TargetID", 
     size = 25,
@@ -53,8 +63,8 @@ local function CreateGui()
         ItemButton:SetColor(Color(0,150,53))
 
         function ItemButton:DoClick()
-            if Player:GetNWInt("MoneyAmount") >= v[#v] then
-                for index,weapon in pairs(Player:GetWeapons()) do
+            if LocalPlayer():GetMoney() >= v[#v] then
+                for index,weapon in pairs(LocalPlayer():GetWeapons()) do
                     if weapon:GetClass() == v[2] then
                         notification.AddLegacy("You don't have enough money for that", 2, 2)
                         surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
@@ -77,4 +87,13 @@ end
 
 net.Receive("OpenInteraction", function()
     CreateGui()
+end)
+
+hook.Add( "HUDPaint", "Interaction", function()
+    if not LocalPlayer():IsValid() then return end
+    if not IsValid(LocalPlayer():GetEyeTrace()) then return end
+
+    if LocalPlayer():GetEyeTrace().Entity:GetModel() == "models/items/ammocrate_ar2.mdl" && LocalPlayer():GetPos():Distance(LocalPlayer():GetEyeTrace().Entity:GetPos()) <= 100 then
+        draw.DrawText( "Use your interaction key to open the menu! ", "TargetID", ScrW() * 0.5, ScrH() * 0.5, color_white, TEXT_ALIGN_CENTER )
+    end
 end)
