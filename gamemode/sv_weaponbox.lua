@@ -28,7 +28,8 @@ net.Receive("RecieveWeapon", function(len, ply)
     if NetTable[2] == "Health Kit" then
         ply:SetHealth(ply:GetMaxHealth())
     end
-    ply:SetNWInt("MoneyAmount",ply:GetNWInt("MoneyAmount") - NetTable[#NetTable])
+    
+    ply:SetNWInt("MoneyAmount",ply:GetNWInt("MoneyAmount") - tonumber(NetTable[#NetTable]))
 end)
 
 net.Receive("RemoveGod", function(len, ply)
