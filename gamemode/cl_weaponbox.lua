@@ -1,7 +1,5 @@
 include("shared.lua")
 
-local Player = LocalPlayer()
-
 local Items = 
 {
     {"models/Items/BoxSRounds.mdl","item_ammo_pistol_large","Pistol Ammo",150},
