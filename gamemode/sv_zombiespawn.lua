@@ -5,7 +5,6 @@ AddCSLuaFile( "cl_hud.lua" )
 include( "shared.lua" )
 include( "cl_hud.lua" )
 
-CreateConVar("RoundNumber", 1)
 local RoundNumber = 1
 local ZombieDamage = 5
 local ZombieHealth = 5
@@ -61,7 +60,7 @@ hook.Add("Think", "CheckZombies", function()
         if ZombieLeft == 0 then
             Zombies = 0
             RoundNumber = RoundNumber + 1
-            GetConVar("RoundNumber"):SetInt(RoundNumber)
+            GetConVar("RoundNumberVar"):SetInt(RoundNumber)
             RunConsoleCommand("say", "Round " .. tostring(RoundNumber))
             timer.UnPause("ZombieSpawn")
         end
