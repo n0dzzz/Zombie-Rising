@@ -43,7 +43,7 @@ local function CreateGui()
         ItemLabel:SetSize(1000,100)
         ItemLabel:SetColor(Color(0,0,0))
         ItemLabel:SetFont("LabelFont")
-        ItemLabel:SetText(tostring(v[2]))
+        ItemLabel:SetText(tostring(v[3]))
 
         local ItemButton = vgui.Create("DButton", ItemPanel)
         ItemButton:SetFont("LabelFont")
