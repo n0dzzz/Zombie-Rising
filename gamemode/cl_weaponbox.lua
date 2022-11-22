@@ -1,6 +1,4 @@
-AddCSLuaFile("sv_money.lua")
-include("shared.lua")
-include("sv_money.lua")
+include("autorun/shared.lua")
 
 local Player = LocalPlayer()
 
@@ -55,7 +53,7 @@ local function CreateGui()
         ItemButton:SetColor(Color(0,150,53))
 
         function ItemButton:DoClick()
-            if Player:GetMoney() >= v[#v] then
+            if Player:GetNWInt("MoneyAmount") >= v[#v] then
                 for index,weapon in pairs(Player:GetWeapons()) do
                     if weapon:GetClass() == v[2] then
                         notification.AddLegacy("You don't have enough money for that", 2, 2)
