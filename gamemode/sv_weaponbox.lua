@@ -22,6 +22,9 @@ hook.Add("PlayerUse", "BoxInteraction", function(ply, ent)
 end)
 
 net.Receive("RecieveWeapon", function(len, ply)
+    --Example Table = {"models/Items/HealthKit.mdl","item_healthkit","Health Kit",1500}
+    --NetTAble = {{item_healthkit,Health Kit,1500}}
+        
     local NetTable = net.ReadTable()
 
     ply:Give(tostring(NetTable[1]))
