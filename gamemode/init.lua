@@ -1,8 +1,6 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
-AddCSLuaFile( "cl_hud.lua" )
 AddCSLuaFile("sv_money.lua")
 AddCSLuaFile("sv_weaponbox.lua")
+AddCSLuaFile( "sv_zombiespawn.lua" )
 
 include( "shared.lua" )
 include( "sv_zombiespawn.lua" )
