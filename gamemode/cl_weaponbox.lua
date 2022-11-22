@@ -1,7 +1,5 @@
 include("shared.lua")
 
-local Player = LocalPlayer()
-
 local Items = 
 {
     {"models/Items/HealthKit.mdl","item_healthkit","Health Kit",1500},
