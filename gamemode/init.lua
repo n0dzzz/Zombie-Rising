@@ -2,9 +2,10 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "cl_hud.lua" )
 AddCSLuaFile("sv_money.lua")
+
 include( "shared.lua" )
 include( "sv_zombiespawn.lua" )
-
+include( "sv_money.lua" )
 
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
     
@@ -13,7 +14,7 @@ hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
    local sboxweapons = GetConVar("sbox_weapons")
    sboxweapons:SetBool(false)
 
-   
+   GetConVar("mgbase_sv_customization"):SetBool(false)
    ply:Give("mg_m1911") 
    ply:GiveAmmo(9999, "Pistol", true)
    
