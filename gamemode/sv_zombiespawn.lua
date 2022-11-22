@@ -1,6 +1,4 @@
-AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
-AddCSLuaFile( "cl_hud.lua" )
 
 include( "shared.lua" )
 include( "cl_hud.lua" )
