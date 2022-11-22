@@ -132,7 +132,7 @@ net.Receive("OpenInteraction", function()
 end)
 
 hook.Add("HUDPaint", "Interaction", function()
-    if tostring(LocalPlayer():GetEyeTrace().Entity) == "[NULL Entity]" then return end
+    if !IsValid(LocalPlayer():GetEyeTrace().Entity) then return end
     
     if LocalPlayer():GetEyeTrace().Entity:GetModel() == "models/items/ammocrate_ar2.mdl" && LocalPlayer():GetPos():Distance(LocalPlayer():GetEyeTrace().Entity:GetPos()) <= 80 then
         draw.DrawText( "Use your interaction key to open the menu! ", "TargetID", ScrW() * 0.5, ScrH() * 0.5, color_white, TEXT_ALIGN_CENTER )
