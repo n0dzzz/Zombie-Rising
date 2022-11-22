@@ -1,70 +1,59 @@
-util.AddNetworkString("RoundChange")
+AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 
 include( "shared.lua" )
-include( "cl_hud.lua" )
 
-local RoundNumber = 1
-local ZombieDamage = 5
-local ZombieHealth = 5
-local MaxZombies = 10 
-local Zombies = 0
-local SpawnDelay = 5
+surface.CreateFont("HUDFont", {
+	font = "Trebuchet24",
+	outline = true,
+	size = 40
+})
 
-timer.Create("ZombieSpawn", SpawnDelay, 0, function()
-    local Spawns = ents.FindByClass("info_player_start")
-    local Ran = math.random(#Spawns)
-    local Zombie = ents.Create("npc_fastzombie")
-    local Poison = ents.Create("npc_poisonzombie")
-    local Zombine = ents.Create("npc_zombine")
+surface.CreateFont("BIGAMMO", {
+	font = "Trebuchet24",
+	outline = false,
+	size = 50
+})
 
-    if (!IsValid(Zombie))  then return end
-    if (!IsValid(Poison))  then return end
-    if (!IsValid(Zombine))  then return end
+local hide = {
+	["CHudHealth"] = true,
+	["CHudBattery"] = true,
+	["CHudAmmo"] = true
+}
 
-    Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
-    Zombie:Spawn()
-    -- Zombie:PointAtEntity(Entity(1))
-    -- Zombie:PointAtEntity(Entity(2))
+hook.Add( "HUDShouldDraw", "HideHUD", function( name )
+	if ( hide[ name ] ) then
+		return false
+	end
+end )
 
-    if(RoundNumber == 5) then
-        SpawnDelay = 3
-    end
-    if(RoundNumber >= 15) then
-        SpawnDelay = 1.5
-        Zombine:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
-        Zombine:Spawn()
-        -- Zombine:PointAtEntity(Entity(1))
-        -- Zombine:PointAtEntity(Entity(2))
-    end
-    if(RoundNumber >= 10) then 
-        Poison:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
-        Poison:Spawn()
-        -- Poison:PointAtEntity(Entity(1))
-        -- Poison:PointAtEntity(Entity(2))
-    end
-    
-    Zombies = Zombies + 1
+hook.Add("HUDPaint", "HUDHOOK", function()		
+
+	if (IsValid(LocalPlayer())) then
+		if (LocalPlayer():Alive()) then
+			
+			draw.DrawText("HP: " .. LocalPlayer():Health(), "BIGAMMO", 10, surface.ScreenHeight() / 1.25, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+			draw.DrawText("ARMOR: " .. LocalPlayer():Armor(), "BIGAMMO", 10, surface.ScreenHeight() / 1.15, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+            draw.DrawText( "Money: $" .. LocalPlayer():GetNWInt("MoneyAmount"), "Trebuchet24", 10, surface.ScreenHeight() / 2, Color(44,255,44,255), TEXT_ALIGN_LEFT)
+			draw.DrawText( "Round: " .. tostring(LocalPlayer():GetNWInt("RoundNumberVar")), "Trebuchet24", 10, surface.ScreenHeight() / 1.9, Color(255,80,80,255), TEXT_ALIGN_LEFT)
+
+			if (IsValid(LocalPlayer():GetActiveWeapon())) then
+				if (LocalPlayer():GetActiveWeapon():Clip1() > -1) then
+					draw.DrawText( LocalPlayer():GetActiveWeapon():Clip1() .. " / " .. LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType()), "BIGAMMO", surface.ScreenWidth() - 150, surface.ScreenHeight() / 1.23, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+					draw.DrawText( LocalPlayer():GetActiveWeapon():GetPrintName(), "Trebuchet24", surface.ScreenWidth() - 150, surface.ScreenHeight() / 1.15, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+				end
+			end
+		end
+	end
+	-- Main Display
 end)
 
-hook.Add("Think", "CheckZombies", function()
-    if (Zombies == MaxZombies) then  
-        timer.Pause("ZombieSpawn")        
-        local ZombieLeft = 0
-        for k,v in pairs(ents.GetAll()) do
-            if v:GetClass() == "npc_zombie" then 
-                ZombieLeft = ZombieLeft + 1
-            end
-        end
-        if ZombieLeft == 0 then
-            Zombies = 0
-            RoundNumber = RoundNumber + 1
-            GetConVar("RoundNumberVar"):SetInt(RoundNumber)
-            net.Start("RoundChange")
-                net.WriteInt(RoundNumber,32)
-            net.Broadcast()
-            timer.UnPause("ZombieSpawn")
-        end
-            
-    end
+net.Receive("RoundChange", function()
+	local RoundNumber = net.ReadInt(32)
+	hook.Add("HUDPaint", "DrawRoundText", function()
+		draw.DrawText("Round ".. tostring(RoundNumber).. "!", "HUDFont", ScrW() * 0.5, ScrH() * 0.5, Color(255,255,255,255), TEXT_ALIGN_CENTER)
+	end)
+	timer.Simple(2, function()
+		hook.Remove("HUDPaint", "DrawRoundText")
+	end)
 end)
