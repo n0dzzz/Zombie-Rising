@@ -1,6 +1,5 @@
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
-AddCSLuaFile( "sv_zombiespawner.lua" )
 
 include( "shared.lua" )
 
@@ -28,7 +27,7 @@ hook.Add( "HUDShouldDraw", "HideHUD", function( name )
 	end
 end )
 
-hook.Add("HUDPaint", "HUDHOOK", function()
+hook.Add("HUDPaint", "HUDHOOK", function()		
 
 	if (IsValid(LocalPlayer())) then
 		if (LocalPlayer():Alive()) then
@@ -47,4 +46,14 @@ hook.Add("HUDPaint", "HUDHOOK", function()
 		end
 	end
 	-- Main Display
+end)
+
+net.Receive("RoundChange", function()
+	local RoundNumber = net.ReadInt(32)
+	hook.Add("HUDPaint", "DrawRoundText", function()
+		draw.DrawText("Round ".. tostring(RoundNumber).. "!", "HUDFont", ScrW() * 0.5, ScrH() * 0.5, Color(255,255,255,255), TEXT_ALIGN_CENTER)
+	end)
+	timer.Simple(2, function()
+		hook.Remove("HUDPaint", "DrawRoundText")
+	end)
 end)
