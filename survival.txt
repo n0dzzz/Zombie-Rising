@@ -1,0 +1,12 @@
+"level_up"
+{
+	"base"		"sandbox"
+	"title"		"Survival Zombie"
+	"maps"		"^sz_"
+	"menusystem"	"1"
+
+	"settings"
+	{
+		
+	}
+}
