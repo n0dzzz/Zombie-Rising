@@ -117,7 +117,7 @@ local function CreateGui()
                 end
 
                 net.Start("RecieveWeapon")
-                    net.WriteTable({v[2],{v[3],v[#v]}})
+                    net.WriteTable({v[2],v[3],v[#v]})
                 net.SendToServer()
             else
                 notification.AddLegacy("You don't have enough money for that.", 1, 2)
