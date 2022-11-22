@@ -1,5 +1,7 @@
 include("shared.lua")
 
+local Player = LocalPlayer()
+
 local Items = 
 {
     {"models/Items/HealthKit.mdl","item_healthkit","Health Kit",1500},
@@ -18,11 +20,11 @@ local Items =
 
     {"models/viper/mw/weapons/w_p320.mdl","mg_p320","P320", 4000},
     {"models/viper/mw/weapons/w_glock.mdlq","mg_glock","Glock", 8000},
-    {"models/viper/mw/weapons/w_deagle.mdl","mg_deagle","Deagle", 1500},
+    {"models/viper/mw/weapons/w_deagle.mdl","mg_deagle","Deagle", 150000},
 
     -- Pistols
 
-    {"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",1500},
+    {"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",15000},
     {"models/viper/mw/weapons/v_mpapa5.mdl.mdl","mg_mpapa5","MP5", 20000},
     {"models/viper/mw/attachments/uzulu/attachment_vm_sm_uzulu_receiver.mdl","mg_uzulu","Uzi", 25000},
     {"models/viper/mw/weapons/v_mpapa7.mdl","mg_mpapa7","MP7", 30000},
