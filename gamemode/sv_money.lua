@@ -8,10 +8,6 @@ function Meta:AddMoney(amount)
     self:SetNWInt("MoneyAmount", self:GetMoney() + amount)
 end
 
-function Meta:RemoveMoney(amount)
-    self:SetNWInt("MoneyAmount",self:GetMoney() - amount)
-end
-
 function Meta:GetMoney()
     return self:GetNWInt("MoneyAmount")
 end
