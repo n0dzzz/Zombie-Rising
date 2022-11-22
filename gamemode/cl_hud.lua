@@ -31,11 +31,11 @@ hook.Add("HUDPaint", "HUDHOOK", function()
 
 	if (IsValid(LocalPlayer())) then
 		if (LocalPlayer():Alive()) then
-
+			
 			draw.DrawText("HP: " .. LocalPlayer():Health(), "BIGAMMO", 10, surface.ScreenHeight() / 1.25, Color(255,255,255,255), TEXT_ALIGN_LEFT)
 			draw.DrawText("ARMOR: " .. LocalPlayer():Armor(), "BIGAMMO", 10, surface.ScreenHeight() / 1.15, Color(255,255,255,255), TEXT_ALIGN_LEFT)
             draw.DrawText( "Money: $" .. LocalPlayer():GetNWInt("MoneyAmount"), "Trebuchet24", 10, surface.ScreenHeight() / 2, Color(44,255,44,255), TEXT_ALIGN_LEFT)
-			draw.DrawText( "Round: " .. tostring(GetConVar("RoundNumberVar"):GetInt()), "Trebuchet24", 10, surface.ScreenHeight() / 1.9, Color(255,80,80,255), TEXT_ALIGN_LEFT)
+			draw.DrawText( "Round: " .. tostring(LocalPlayer():GetNWInt("RoundNumberVar")), "Trebuchet24", 10, surface.ScreenHeight() / 1.9, Color(255,80,80,255), TEXT_ALIGN_LEFT)
 
 			if (IsValid(LocalPlayer():GetActiveWeapon())) then
 				if (LocalPlayer():GetActiveWeapon():Clip1() > -1) then
