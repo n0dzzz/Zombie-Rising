@@ -1,5 +1,6 @@
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
+AddCSLuaFile( "sv_money.lua" )
 
 include( "shared.lua" )
 
