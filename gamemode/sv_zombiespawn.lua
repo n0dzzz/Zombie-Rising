@@ -3,6 +3,7 @@ AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "cl_hud.lua" )
 
 include( "shared.lua" )
+include( "cl_hud.lua" )
 
 CreateConVar("RoundNumber", 1)
 local RoundNumber = 1
