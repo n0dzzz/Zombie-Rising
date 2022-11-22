@@ -1,6 +1,8 @@
 include("shared.lua")
 AddCSLuaFile( "cl_init.lua" )
 
+local WeaponBox = "models/items/ammocrate_ar2.mdl"
+
 local Items = 
 {
     {"models/Items/HealthKit.mdl","item_healthkit","Health Kit",1500},
@@ -126,7 +128,6 @@ local function CreateGui()
             end
         end
 
-
         YPos = YPos + ItemPanel:GetTall() * 1.1 
     end
 end
@@ -137,8 +138,15 @@ end)
 
 hook.Add("HUDPaint", "Interaction", function()
     if !IsValid(LocalPlayer():GetEyeTrace().Entity) then return end
+    local Player = LocalPlayer()
+    local EyeTrace = Player:GetEyeTrace()
+    local EyeTraceEnt = EyeTrace.Entity
+    local EntTracePosToScreen = EyeTraceEnt:GetPos():ToScreen()
 
-    if LocalPlayer():GetEyeTrace().Entity:GetModel() == "models/items/ammocrate_ar2.mdl" && LocalPlayer():GetPos():Distance(LocalPlayer():GetEyeTrace().Entity:GetPos()) <= 80 then
-        draw.DrawText( "Use your interaction key to open the menu! ", "TargetID", ScrW() * 0.5, ScrH() * 0.5, color_white, TEXT_ALIGN_CENTER )
+    if EyeTraceEnt:GetModel() == WeaponBox && Player:GetPos():Distance(EyeTraceEnt:GetPos()) <= 85 then
+        surface.SetFont("TargetID")
+        surface.SetTextPos(EntTracePosToScreen["x"] - 150, EntTracePosToScreen["y"] - 120)
+        surface.SetTextColor(255, 255, 255, 255)
+        surface.DrawText( "Use your interaction key to open the menu! ")
     end
 end)
