@@ -25,5 +25,5 @@ net.Receive("RecieveWeapon", function(len, ply)
     local NetTable = net.ReadTable()
     
     ply:Give(tostring(NetTable[1]))
-    ply:SetNWInt("MoneyAmount",ply:GetNWInt("MoneyAmount") - NetTable[2])
+    ply:SetNWInt("MoneyAmount",ply:GetMoney() - NetTable[2])
 end)

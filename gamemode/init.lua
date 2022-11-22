@@ -18,5 +18,5 @@ hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
 
    GetConVar("mgbase_sv_customization"):SetBool(false)
    ply:Give("mg_m1911") 
-   
+   ply:Give("item_ammo_pistol_large") 
 end)
