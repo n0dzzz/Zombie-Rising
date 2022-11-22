@@ -1,11 +1,13 @@
+AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
+AddCSLuaFile( "cl_hud.lua" )
 
 include( "shared.lua" )
 include( "cl_hud.lua" )
 
 local RoundNumber = 1
 local ZombieDamage = 5
-local ZombieHealth = 5
+local ZombieHealth = 50
 local MaxZombies = 10 
 local Zombies = 0
 local SpawnDelay = 5
@@ -21,13 +23,15 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
     if (!IsValid(Poison))  then return end
     if (!IsValid(Zombine))  then return end
 
-    Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
+    Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 5)))
     Zombie:Spawn()
+    Zombie:SetHealth(ZombieHealth * RoundNumber / 2)
     Zombie:PointAtEntity(Entity(1))
     Zombie:PointAtEntity(Entity(2))
 
     if(RoundNumber == 5) then
         SpawnDelay = 3
+        print(SpawnDelay)
     end
     if(RoundNumber == 15) then
         SpawnDelay = 1.5
