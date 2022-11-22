@@ -1,8 +1,9 @@
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
-AddCSLuaFile( "sv_money.lua" )
+AddCSLuaFile( "cl_hud.lua" )
 
 include( "shared.lua" )
+include( "sv_zombiespawn.lua" )
 
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
     
@@ -11,6 +12,7 @@ hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
    local sboxweapons = GetConVar("sbox_weapons")
    sboxweapons:SetBool(false)
 
-   ply:Give("weapon_crowbar") 
-
+   ply:Give("mg_m1911") 
+   ply:GiveAmmo(9999, "Pistol", true)
+   
 end)
