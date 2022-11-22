@@ -1,9 +1,9 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
-AddCSLuaFile( "cl_hud.lua" )
-
+include( "cl_hud.lua" )
+include( "cl_init.lua" )
 include( "shared.lua" )
-include( "sv_zombiespawn.lua" )
+
+AddCSLuaFile( "sv_money.lua" )
+AddCSLuaFile( "sv_zombiespawn.lua" )
 
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
     
