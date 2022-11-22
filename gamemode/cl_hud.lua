@@ -1,10 +1,8 @@
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
-AddCSLuaFile("sv_money.lua")
-AddCSLuaFile("sv_zombiespawner.lua")
+AddCSLuaFile( "sv_zombiespawner.lua" )
 
 include( "shared.lua" )
-include("sv_money.lua")
 
 surface.CreateFont("HUDFont", {
 	font = "Trebuchet24",
