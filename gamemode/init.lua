@@ -9,6 +9,7 @@ include( "sv_zombiespawn.lua" )
 include( "sv_money.lua" )
 include( "sv_weaponbox.lua" )
 
+CreateConVar("RoundNumberVar", 1)
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
     
    ply:StripWeapons()
