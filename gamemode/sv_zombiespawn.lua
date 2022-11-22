@@ -30,14 +30,14 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
     if(RoundNumber == 5) then
         SpawnDelay = 3
     end
-    if(RoundNumber == 15) then
+    if(RoundNumber >= 15) then
         SpawnDelay = 1.5
         Zombine:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
         Zombine:Spawn()
         -- Zombine:PointAtEntity(Entity(1))
         -- Zombine:PointAtEntity(Entity(2))
     end
-    if(RoundNumber == 10) then 
+    if(RoundNumber >= 10) then 
         Poison:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
         Poison:Spawn()
         -- Poison:PointAtEntity(Entity(1))
