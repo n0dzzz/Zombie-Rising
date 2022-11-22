@@ -19,3 +19,9 @@ hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
    ply:Give("mg_m1911") 
    ply:Give("item_ammo_pistol_large") 
 end)
+
+hook.Add("EntityTakeDamage", "RemoveFriendlyFire", function(target,dmg)
+   if target:IsPlayer() && dmg:GetAttacker():IsPlayer() then
+      dmg:ScaleDamage(0)
+   end
+end)
