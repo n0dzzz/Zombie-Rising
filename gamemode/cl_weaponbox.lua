@@ -1,12 +1,12 @@
 include("shared.lua")
 AddCSLuaFile( "cl_init.lua" )
 
-local WeaponBox = "models/items/ammocrate_ar2.mdl"
-
 local Items = 
 {
-    {"models/Items/HealthKit.mdl","item_healthkit","Health Kit",1500},
+    {"models/viper/mw/weapons/v_dblmg.mdl","","Mini Gun", 500000},
+    {"models/Items/HealthKit.mdl","","Health Kit",1500},
     {"models/Items/battery.mdl","item_battery","Armor",2000},
+    {"models/props/cs_assault/Money.mdl","","Customization", 75000}, -- maybe should be 100k
 
     -- Health
 
@@ -21,12 +21,12 @@ local Items =
 
     {"models/viper/mw/weapons/w_p320.mdl","mg_p320","P320", 4000},
     {"models/viper/mw/weapons/w_glock.mdlq","mg_glock","Glock", 8000},
-    {"models/viper/mw/weapons/w_deagle.mdl","mg_deagle","Deagle", 1500},
+    {"models/viper/mw/weapons/w_deagle.mdl","mg_deagle","Deagle", 10000},
 
     -- Pistols
 
-    {"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",1500},
-    {"models/viper/mw/weapons/v_mpapa5.mdl.mdl","mg_mpapa5","MP5", 20000},
+    {"models/viper/mw/weapons/v_mpapa5.mdl.mdl","mg_mpapa5","MP5", 15000},
+    {"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",20000},
     {"models/viper/mw/attachments/uzulu/attachment_vm_sm_uzulu_receiver.mdl","mg_uzulu","Uzi", 25000},
     {"models/viper/mw/weapons/v_mpapa7.mdl","mg_mpapa7","MP7", 30000},
     {"models/viper/mw/weapons/v_secho.mdl","mg_secho","Scorpion", 35000},
@@ -35,7 +35,7 @@ local Items =
     -- Smgs
 
     {"models/viper/mw/weapons/w_akilo47.mdl","mg_augolf","AK47", 50000},
-    {"models/viper/mw/weapons/v_falima.mdl","mg_falima","FAL", 6000},
+    {"models/viper/mw/weapons/v_falima.mdl","mg_falima","FAL", 60000},
     {"models/viper/mw/weapons/v_mike4.mdl","mg_mike4","M4A1", 85000},
     {"models/viper/mw/weapons/v_scharlie.mdl","mg_scharlie","FN Scar 17", 10000},
     {"models/viper/mw/weapons/w_tango21.mdl","mg_tango21","RAM-7", 125000},
@@ -128,6 +128,7 @@ local function CreateGui()
             end
         end
 
+
         YPos = YPos + ItemPanel:GetTall() * 1.1 
     end
 end
@@ -138,15 +139,8 @@ end)
 
 hook.Add("HUDPaint", "Interaction", function()
     if !IsValid(LocalPlayer():GetEyeTrace().Entity) then return end
-    local Player = LocalPlayer()
-    local EyeTrace = Player:GetEyeTrace()
-    local EyeTraceEnt = EyeTrace.Entity
-    local EntTracePosToScreen = EyeTraceEnt:GetPos():ToScreen()
 
-    if EyeTraceEnt:GetModel() == WeaponBox && Player:GetPos():Distance(EyeTraceEnt:GetPos()) <= 85 then
-        surface.SetFont("TargetID")
-        surface.SetTextPos(EntTracePosToScreen["x"] - 150, EntTracePosToScreen["y"] - 120)
-        surface.SetTextColor(255, 255, 255, 255)
-        surface.DrawText( "Use your interaction key to open the menu! ")
+    if LocalPlayer():GetEyeTrace().Entity:GetModel() == "models/items/ammocrate_ar2.mdl" && LocalPlayer():GetPos():Distance(LocalPlayer():GetEyeTrace().Entity:GetPos()) <= 80 then
+        draw.DrawText( "Use your interaction key to open the menu! ", "TargetID", ScrW() * 0.5, ScrH() * 0.5, color_white, TEXT_ALIGN_CENTER )
     end
 end)

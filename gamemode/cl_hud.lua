@@ -29,6 +29,21 @@ end )
 
 hook.Add("HUDPaint", "HUDHOOK", function()		
 
+	draw.DrawText("Prestige: " .. LocalPlayer():GetNWInt("PlayerPrestige"), "DermaDefaultBold", surface.ScreenWidth() / 1.5, surface.ScreenHeight() / 80, Color(255,255,255,255), TEXT_ALIGN_LEFT) 
+    draw.DrawText("Progress: " .. LocalPlayer():GetNWInt("PlayerRankProgress") .. " / "  .. LocalPlayer():GetNWInt("MaxPlayerRankProgress"), "DermaDefaultBold", surface.ScreenWidth() / 2.2, surface.ScreenHeight() / 80, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+	draw.DrawText("Rank: " .. LocalPlayer():GetNWInt("PlayerRank"), "DermaDefaultBold", surface.ScreenWidth() / 3, surface.ScreenHeight() / 80, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+
+	if (LocalPlayer():GetNWInt("PlayerRank") >= 100) then
+		draw.DrawText("Press X to Prestige", "DermaDefaultBold", surface.ScreenWidth() / 2.2, surface.ScreenHeight() / 20, Color(255,255,255,255), TEXT_ALIGN_LEFT)
+
+		if(input.IsKeyDown(34)) then -- x key
+			LocalPlayer():SetNWInt("PlayerPrestige", LocalPlayer():GetNWInt("PlayerPrestige") + 1)
+
+			LocalPlayer():SetNWInt("PlayerRank", 1)
+			LocalPlayer():SetNWInt("PlayerRankProgress", 0)
+		end
+	end
+
 	if (IsValid(LocalPlayer())) then
 		if (LocalPlayer():Alive()) then
 			
