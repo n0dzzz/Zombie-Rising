@@ -18,8 +18,8 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
 
     if (!IsValid(Zombie))  then return end
 
-    --Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
-    --Zombie:Spawn()    
+    Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
+    Zombie:Spawn()    
 
     if(RoundNumber >= 15) then
         local Zombine = ents.Create("npc_vj_zs_zombine")
