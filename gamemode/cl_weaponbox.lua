@@ -111,6 +111,11 @@ local function CreateGui()
         ItemButton:SetColor(Color(0,150,53))
 
         function ItemButton:DoClick()
+            if v[3] == "Mini Gun" && ply:GetNWInt("PlayerPrestige") != 20 then
+                notification.AddLegacy("You do not meet the required prestige for that weapon(Prestige: 20).", 1, 2)
+                surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
+                return 
+            end
             if LocalPlayer():GetNWInt("MoneyAmount") >= v[#v] then
                 for index,weapon in pairs(LocalPlayer():GetWeapons()) do
                     if weapon:GetClass() == v[2] then
