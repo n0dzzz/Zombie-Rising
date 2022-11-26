@@ -17,10 +17,10 @@ net.Receive("EndGame",function(len,ply)
     if EndGameVar then
         EndGameVar = false
         for k,v in pairs(player.GetAll()) do
-            v:PrintMessage( HUD_PRINTCENTER, "Game over. You made it to round ".. tostring(GetConVar("RoundNumberVar"):GetInt()))
-            timer.Simple(3, function()
-                RunConsoleCommand("changelevel", game.GetMap())
-            end)
+            v:PrintMessage( HUD_PRINTCENTER, "Game over. You made it to round :".. tostring(v:GetNWInt("RoundNumberVar")))
         end
+        timer.Simple(3, function()
+            RunConsoleCommand("changelevel", game.GetMap())
+        end)
     end
 end)
