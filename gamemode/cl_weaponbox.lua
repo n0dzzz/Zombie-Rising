@@ -73,6 +73,10 @@ local function CreateGui()
     Frame:SetSize(500,500)
     Frame:Center()
     Frame:MakePopup()
+    Frame.Paint = function(self, w, h)
+        surface.SetDrawColor(Color(0,0,0))
+        surface.DrawRect(0, 0, w, h)
+    end
 
     function Frame:OnClose()
         net.Start("RemoveGod")
@@ -86,9 +90,10 @@ local function CreateGui()
 
         local ItemPanel = vgui.Create("DPanel", DScrollPanel)
         ItemPanel:SetPos(0,YPos)
+        ItemPanel:SetBackgroundColor(Color(255,255,255))
         ItemPanel:SetSize(Frame:GetWide() -10,Frame:GetTall() * 0.2)
         local model = vgui.Create("DModelPanel", ItemPanel)
-        model:SetPos(10,-10)
+        model:SetPos(10,0)
         model:SetModel(tostring(v[1]))
         model:SetSize(100,100)
         model:SetFOV(40)
@@ -99,7 +104,7 @@ local function CreateGui()
         end
         
         local ItemLabel = vgui.Create("DLabel", ItemPanel)
-        ItemLabel:SetPos((ItemPanel:GetWide() * 0.5) + (#tostring(v[2]) * -9), 0)
+        ItemLabel:SetPos((ItemPanel:GetWide() * 0.5) - 80, 0)
         ItemLabel:SetSize(1000,100)
         ItemLabel:SetColor(Color(0,0,0))
         ItemLabel:SetFont("LabelFont")
@@ -111,6 +116,17 @@ local function CreateGui()
         ItemButton:SetSize(95,40)
         ItemButton:SetText("$"..tostring(v[#v]))
         ItemButton:SetColor(Color(0,150,53))
+        ItemButton.Paint = function(self, w, h)
+            ItemButton:SetColor(Color(0,150,53))
+            surface.SetDrawColor(Color(0,150,53))
+            surface.DrawOutlinedRect(0, 0, w, h,2)
+            
+            if self:IsHovered() then
+                surface.SetDrawColor(Color(0,250,0))
+                surface.DrawOutlinedRect(0, 0, w, h,2)
+                ItemButton:SetColor(Color(0,250,0))
+            end
+        end
 
         function ItemButton:DoClick()
             if v[3] == "Mini Gun" && LocalPlayer():GetNWInt("PlayerPrestige") != 20 then
@@ -129,6 +145,8 @@ local function CreateGui()
                 net.Start("RecieveWeapon")
                     net.WriteTable({v[2],v[3],v[#v]})
                 net.SendToServer()
+                surface.PlaySound("buttons/bell1.wav")
+                notification.AddLegacy("You successfully purchased ".. v[3] .. ".", 0, 2)
             else
                 notification.AddLegacy("You don't have enough money for that.", 1, 2)
                 surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
@@ -147,13 +165,11 @@ end)
 hook.Add("HUDPaint", "Interaction", function()
     if !IsValid(LocalPlayer():GetEyeTrace().Entity) then return end
     local Player = LocalPlayer()
-    print(Player)
     local EyeTrace = Player:GetEyeTrace()
     local EyeTraceEnt = EyeTrace.Entity
-    print(EyeTraceEnt)
     local EntTracePosToScreen = EyeTraceEnt:GetPos():ToScreen()
 
-    print(EyeTraceEnt:GetModel())
+
     if EyeTraceEnt:GetModel() == WeaponBox && Player:GetPos():Distance(EyeTraceEnt:GetPos()) <= 85 then
         surface.SetFont("TargetID")
         surface.SetTextPos(EntTracePosToScreen["x"] - 150, EntTracePosToScreen["y"] - 120)
