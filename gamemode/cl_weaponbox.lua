@@ -139,6 +139,7 @@ local function CreateGui()
                     if weapon:GetClass() == v[2] then
                         notification.AddLegacy("You already have that weapon.", 2, 2)
                         surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
+                        return
                     end
                 end
 
