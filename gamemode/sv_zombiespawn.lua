@@ -59,6 +59,11 @@ hook.Add("Think", "CheckZombies", function()
         if ZombieLeft == 0 then
             Zombies = 0
             RoundNumber = RoundNumber + 1
+            for k,v in pairs(player.GetAll()) do
+                if !v:Alive() then
+                    v:Spawn()
+                end
+            end
 
             net.Start("RoundChange")
                 net.WriteInt(RoundNumber,32)
