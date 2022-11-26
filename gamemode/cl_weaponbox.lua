@@ -129,7 +129,7 @@ local function CreateGui()
         end
 
         function ItemButton:DoClick()
-            if v[3] == "Mini Gun" && LocalPlayer():GetNWInt("PlayerPrestige") != 20 then
+            if v[3] == "Mini Gun" && LocalPlayer():GetNWInt("PlayerPrestige") < 20 then
                 notification.AddLegacy("You do not meet the required prestige for that weapon(Prestige: 20).", 1, 2)
                 surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
                 return 
