@@ -1,6 +1,8 @@
 include("shared.lua")
 AddCSLuaFile( "cl_init.lua" )
 
+local WeaponBox = "models/items/ammocrate_ar2.mdl"
+
 local Items = 
 {
     {"models/viper/mw/weapons/v_dblmg.mdl","","Mini Gun", 500000},
@@ -111,7 +113,7 @@ local function CreateGui()
         ItemButton:SetColor(Color(0,150,53))
 
         function ItemButton:DoClick()
-            if v[3] == "Mini Gun" && ply:GetNWInt("PlayerPrestige") != 20 then
+            if v[3] == "Mini Gun" && LocalPlayer():GetNWInt("PlayerPrestige") != 20 then
                 notification.AddLegacy("You do not meet the required prestige for that weapon(Prestige: 20).", 1, 2)
                 surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
                 return 
@@ -145,10 +147,13 @@ end)
 hook.Add("HUDPaint", "Interaction", function()
     if !IsValid(LocalPlayer():GetEyeTrace().Entity) then return end
     local Player = LocalPlayer()
+    print(Player)
     local EyeTrace = Player:GetEyeTrace()
     local EyeTraceEnt = EyeTrace.Entity
+    print(EyeTraceEnt)
     local EntTracePosToScreen = EyeTraceEnt:GetPos():ToScreen()
 
+    print(EyeTraceEnt:GetModel())
     if EyeTraceEnt:GetModel() == WeaponBox && Player:GetPos():Distance(EyeTraceEnt:GetPos()) <= 85 then
         surface.SetFont("TargetID")
         surface.SetTextPos(EntTracePosToScreen["x"] - 150, EntTracePosToScreen["y"] - 120)
