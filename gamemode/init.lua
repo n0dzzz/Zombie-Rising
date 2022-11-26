@@ -2,16 +2,20 @@ AddCSLuaFile("sv_money.lua")
 AddCSLuaFile("sv_weaponbox.lua")
 AddCSLuaFile( "sv_zombiespawn.lua" )
 AddCSLuaFile( "sv_rank.lua" )
+AddCSLuaFile( "sv_spectate.lua" )
 
 include( "shared.lua" )
 include( "sv_zombiespawn.lua" )
 include( "sv_money.lua" )
 include( "sv_weaponbox.lua" )
 include( "sv_rank.lua" )
+include( "sv_spectate.lua" )
+
+util.AddNetworkString("PlayerDeath")
 
 CreateConVar("RoundNumberVar", 1)
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
-
+   ply:UnSpectate()
    ply:StripWeapons()
 
    local sboxweapons = GetConVar("sbox_weapons")
@@ -47,10 +51,24 @@ hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
       ply:SetArmor(75)
    end
 
+   net.Start("PlayerRespawn")
+   net.Send(ply)
+
 end)
 
 hook.Add("EntityTakeDamage", "RemoveFriendlyFire", function(target,dmg)
    if target:IsPlayer() && dmg:GetAttacker():IsPlayer() then
       dmg:ScaleDamage(0)
    end
+end)
+
+hook.Add("PlayerDeathThink", "DisableRespawn", function(ply)
+   ply:ScreenFade(SCREENFADE.OUT, Color(255,255,255), 0, 0)
+   local RagDoll = ply:GetRagdollEntity()
+   if IsValid(RagDoll) then
+      RagDoll:Remove()
+      net.Start("PlayerDeath")
+      net.Send(ply)
+   end
+   return false
 end)
