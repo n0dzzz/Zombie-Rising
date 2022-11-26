@@ -12,6 +12,7 @@ include( "sv_rank.lua" )
 include( "sv_spectate.lua" )
 
 util.AddNetworkString("PlayerDeath")
+util.AddNetworkString("PlayerRespawn")
 
 CreateConVar("RoundNumberVar", 1)
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
