@@ -63,13 +63,16 @@ hook.Add("EntityTakeDamage", "RemoveFriendlyFire", function(target,dmg)
    end
 end)
 
+hook.Add("PlayerDeath", "SendDeath", function(victim,inflictor,attacker)
+   victim:ScreenFade(SCREENFADE.OUT, Color(255,255,255), 0, 0)
+   net.Start("PlayerDeath")
+   net.Send(victim)
+end)
+
 hook.Add("PlayerDeathThink", "DisableRespawn", function(ply)
-   ply:ScreenFade(SCREENFADE.OUT, Color(255,255,255), 0, 0)
    local RagDoll = ply:GetRagdollEntity()
    if IsValid(RagDoll) then
       RagDoll:Remove()
-      net.Start("PlayerDeath")
-      net.Send(ply)
    end
    return false
 end)
