@@ -34,18 +34,18 @@ local function SpectateGui(open)
 
             surface.SetDrawColor(0,0,0)
             surface.DrawRect(0, 0, w, h) 
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor( 255, 44, 44, 255 )
             surface.DrawOutlinedRect(0,0, w, h,2)
         end
 
         local BackButton = vgui.Create("Button", SpectateFrame)
         BackButton:SetText("<")
         BackButton:SetSize(80,100)
-        BackButton:SetColor(Color(255,255,255))
+        BackButton:SetColor(Color( 255,255,255 ))
         BackButton:SetFont("LabelFont")
 
         BackButton.Paint = function(self,w,h)
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor( 255, 44, 44, 255 )
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
 
@@ -60,12 +60,12 @@ local function SpectateGui(open)
         local ForwardButton = vgui.Create("Button", SpectateFrame)
         ForwardButton:SetText(">")
         ForwardButton:SetSize(80,100)
-        ForwardButton:SetColor(Color(255,255,255))
+        ForwardButton:SetColor(Color( 255,255,255 ))
         ForwardButton:SetPos(SpectateFrame:GetWide() - 80, 0)
         ForwardButton:SetFont("LabelFont")
 
         ForwardButton.Paint = function(self,w,h)
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor( 255, 44, 44, 255 )
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
 
@@ -81,10 +81,10 @@ local function SpectateGui(open)
         PlayerButton:SetSize((ForwardButton.x - 39) - (BackButton.x + 39), 100)
         PlayerButton:SetFont("LabelFont")
         PlayerButton:Center()
-        PlayerButton:SetColor(Color(255,255,255))
+        PlayerButton:SetColor(Color( 255,255,255 ))
 
         PlayerButton.Paint = function(self,w,h)
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor( 255, 44, 44, 255 )
             surface.DrawOutlinedRect(0,0,w,h,2)
 
             if AlivePlayers[CurrentPlayer] then
