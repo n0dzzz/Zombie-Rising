@@ -8,7 +8,7 @@ local EndGameVar = true
 net.Receive("BeginSpectate", function(len,ply)
     local SpecEnt = net.ReadEntity()
     if IsValid(SpecEnt) then
-        ply:Spectate(OBS_MODE_FIXED)
+        ply:Spectate(OBS_MODE_IN_EYE)
         ply:SpectateEntity(SpecEnt)
     end
 end)
