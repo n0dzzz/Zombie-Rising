@@ -87,7 +87,7 @@ local function SpectateGui(open)
             surface.SetDrawColor( 255, 44, 44, 255 )
             surface.DrawOutlinedRect(0,0,w,h,2)
 
-            if AlivePlayers[CurrentPlayer] then
+            if IsValid(AlivePlayers[CurrentPlayer]) then
                 PlayerButton:SetText(AlivePlayers[CurrentPlayer]:Nick())
             else
                 PlayerButton:SetText("No alive players")
