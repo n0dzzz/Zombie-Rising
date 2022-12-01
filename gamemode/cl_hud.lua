@@ -67,7 +67,7 @@ net.Receive("RoundChange", function()
 	surface.PlaySound("ambient/alarms/apc_alarm_pass1.wav")
 
 	hook.Add("HUDPaint", "DrawRoundText", function()
-		draw.DrawText("Round ".. tostring(RoundNumber).. "!", "HUDFont", ScrW() * 0.5, ScrH() * 0.5, Color(255,255,255,255), TEXT_ALIGN_CENTER)
+		draw.DrawText("Round ".. tostring(RoundNumber).. "!", "HUDFont", ScrW() * 0.5, ScrH() * 0.5, Color(255, 44, 44, 255), TEXT_ALIGN_CENTER)
 	end)
 	
 	timer.Simple(2, function()
