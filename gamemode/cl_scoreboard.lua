@@ -30,20 +30,23 @@ local function CreateScoreboard(ToggleScoreboard)
             local PlayerPanel = vgui.Create("DPanel", PlayerScrollPanel)
             PlayerPanel:SetPos(0,ypos)
             PlayerPanel:SetSize(PlayerScrollPanel:GetWide(),PlayerScrollPanel:GetTall() * 0.05)
+            
             local PlayerName = v:Name()
             local PlayerMoney = v:GetNWInt("MoneyAmount")
             local PlayerPrestige = v:GetNWInt("PlayerPrestige")
             local PlayerRank = v:GetNWInt("PlayerRank")
             local PlayerPing = v:Ping()
+            
+            if v:GetNWString("BackgroundColor") == "" then v:SetNWString("BackgroundColor", tostring(ColorRand())) end
             PlayerPanel.Paint = function(self,w,h)
                 if IsValid(v) then
-                    surface.SetDrawColor(255, 255, 255, 255)
+                    surface.SetDrawColor(string.ToColor(v:GetNWString("BackgroundColor")))
                     surface.DrawRect(0, 0, w, h)
-                    draw.SimpleText(PlayerName, "TargetID", w * 0.153 , h /2 , Color(0,0,0,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText("$"..tostring(PlayerMoney), "TargetID", w * 0.384 , h /2 , Color(0,0,0,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText(PlayerPrestige, "TargetID", w * 0.587 , h /2 , Color(0,0,0,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText(PlayerRank, "TargetID", w * 0.735 , h /2 , Color(0,0,0,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText(PlayerPing, "TargetID", w * 0.868 , h /2 , Color(0,0,0,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerName, "TargetID", w * 0.153 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText("$"..tostring(PlayerMoney), "TargetID", w * 0.384 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerPrestige, "TargetID", w * 0.587 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerRank, "TargetID", w * 0.735 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerPing, "TargetID", w * 0.868 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
                 end
             end
