@@ -115,7 +115,7 @@ hook.Add("Think", "GetAlivePlayers", function()
         end
     end
     for i,p in pairs(AlivePlayers) do
-        if !p:Alive() then
+        if IsValid(p) && !p:Alive() then
             if i == 0 then table.Empty(AlivePlayers) return end
             table.remove(AlivePlayers, i)
         end
