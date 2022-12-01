@@ -90,7 +90,7 @@ local function CreateGui()
 
         local ItemPanel = vgui.Create("DPanel", DScrollPanel)
         ItemPanel:SetPos(0,YPos)
-        ItemPanel:SetBackgroundColor(Color(255,255,255))
+        ItemPanel:SetBackgroundColor(Color( 255, 44, 44, 255 ))
         ItemPanel:SetSize(Frame:GetWide() -10,Frame:GetTall() * 0.2)
         local model = vgui.Create("DModelPanel", ItemPanel)
         model:SetPos(10,0)
@@ -115,10 +115,10 @@ local function CreateGui()
         ItemButton:SetPos(ItemPanel:GetWide() - 140, 30)
         ItemButton:SetSize(95,40)
         ItemButton:SetText("$"..tostring(v[#v]))
-        ItemButton:SetColor(Color(0,150,53))
+        ItemButton:SetColor(Color(0,0,0))
         ItemButton.Paint = function(self, w, h)
-            ItemButton:SetColor(Color(0,150,53))
-            surface.SetDrawColor(Color(0,150,53))
+            ItemButton:SetColor(Color(0,0,0))
+            surface.SetDrawColor(Color(0,0,0))
             surface.DrawOutlinedRect(0, 0, w, h,2)
             
             if self:IsHovered() then
@@ -129,7 +129,7 @@ local function CreateGui()
         end
 
         function ItemButton:DoClick()
-            if v[3] == "Mini Gun" && LocalPlayer():GetNWInt("PlayerPrestige") < 20 then
+            if v[3] == "Mini Gun" && LocalPlayer():GetNWInt("PlayerPrestige") != 20 then
                 notification.AddLegacy("You do not meet the required prestige for that weapon(Prestige: 20).", 1, 2)
                 surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
                 return 
@@ -139,7 +139,6 @@ local function CreateGui()
                     if weapon:GetClass() == v[2] then
                         notification.AddLegacy("You already have that weapon.", 2, 2)
                         surface.PlaySound("physics/surfaces/sand_impact_bullet1.wav")
-                        return
                     end
                 end
 
@@ -170,11 +169,10 @@ hook.Add("HUDPaint", "Interaction", function()
     local EyeTraceEnt = EyeTrace.Entity
     local EntTracePosToScreen = EyeTraceEnt:GetPos():ToScreen()
 
-
     if EyeTraceEnt:GetModel() == WeaponBox && Player:GetPos():Distance(EyeTraceEnt:GetPos()) <= 85 then
         surface.SetFont("TargetID")
         surface.SetTextPos(EntTracePosToScreen["x"] - 150, EntTracePosToScreen["y"] - 120)
-        surface.SetTextColor(255, 255, 255, 255)
+        surface.SetTextColor(255, 44, 44, 255)
         surface.DrawText( "Use your interaction key to open the menu! ")
     end
 end)
