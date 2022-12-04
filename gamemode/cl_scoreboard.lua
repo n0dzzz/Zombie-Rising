@@ -3,6 +3,8 @@ AddCSLuaFile( "shared.lua" )
 
 include( "shared.lua" )
 
+local ScoreboardBase
+
 local function CreateScoreboard(ToggleScoreboard)
     if ToggleScoreboard then
         ScoreboardBase = vgui.Create("DFrame")
