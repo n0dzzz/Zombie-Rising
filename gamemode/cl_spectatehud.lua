@@ -3,7 +3,7 @@ AddCSLuaFile( "shared.lua" )
 
 include( "shared.lua" )
 
-local CurrentPlayer = 0
+local CurrentPlayer = 1
 local open = false
 local SpectateFrame
 local AlivePlayers = {}
@@ -50,10 +50,9 @@ local function SpectateGui(open)
         end
 
         function BackButton:DoClick()
-            if CurrentPlayer <= 0 then
+            CurrentPlayer = CurrentPlayer -  1
+            if CurrentPlayer < 1 then
                 CurrentPlayer = #AlivePlayers
-            else
-                CurrentPlayer = CurrentPlayer -  1
             end
         end
 
@@ -70,10 +69,9 @@ local function SpectateGui(open)
         end
 
         function ForwardButton:DoClick()
-            if CurrentPlayer >= #AlivePlayers then
-                CurrentPlayer = 0
-            else
-                CurrentPlayer = CurrentPlayer + 1
+            CurrentPlayer = CurrentPlayer + 1
+            if CurrentPlayer > #AlivePlayers then
+                CurrentPlayer = 1
             end
         end
         
@@ -111,12 +109,12 @@ end
 hook.Add("Think", "GetAlivePlayers", function()
     for k,v in pairs(player.GetAll()) do
         if v:Alive() && !table.HasValue(AlivePlayers, v) then
-            table.insert(AlivePlayers, #AlivePlayers, v)
+            table.insert(AlivePlayers, v)
         end
     end
     for i,p in pairs(AlivePlayers) do
         if IsValid(p) && !p:Alive() then
-            if i == 0 then table.Empty(AlivePlayers) return end
+            if i == 1 then table.Empty(AlivePlayers) return end
             table.remove(AlivePlayers, i)
         end
     end
