@@ -3,7 +3,7 @@ AddCSLuaFile( "shared.lua" )
 
 include( "shared.lua" )
 
-local CurrentPlayer = 1
+local CurrentPlayer = 0
 local open = false
 local SpectateFrame
 local AlivePlayers = {}
@@ -34,44 +34,46 @@ local function SpectateGui(open)
 
             surface.SetDrawColor(0,0,0)
             surface.DrawRect(0, 0, w, h) 
-            surface.SetDrawColor( 255, 44, 44, 255 )
+            surface.SetDrawColor(255,255,255)
             surface.DrawOutlinedRect(0,0, w, h,2)
         end
 
         local BackButton = vgui.Create("Button", SpectateFrame)
         BackButton:SetText("<")
         BackButton:SetSize(80,100)
-        BackButton:SetColor(Color( 255,255,255 ))
+        BackButton:SetColor(Color(255,255,255))
         BackButton:SetFont("LabelFont")
 
         BackButton.Paint = function(self,w,h)
-            surface.SetDrawColor( 255, 44, 44, 255 )
+            surface.SetDrawColor(255,255,255)
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
 
         function BackButton:DoClick()
-            CurrentPlayer = CurrentPlayer -  1
-            if CurrentPlayer < 1 then
+            if CurrentPlayer <= 0 then
                 CurrentPlayer = #AlivePlayers
+            else
+                CurrentPlayer = CurrentPlayer -  1
             end
         end
 
         local ForwardButton = vgui.Create("Button", SpectateFrame)
         ForwardButton:SetText(">")
         ForwardButton:SetSize(80,100)
-        ForwardButton:SetColor(Color( 255,255,255 ))
+        ForwardButton:SetColor(Color(255,255,255))
         ForwardButton:SetPos(SpectateFrame:GetWide() - 80, 0)
         ForwardButton:SetFont("LabelFont")
 
         ForwardButton.Paint = function(self,w,h)
-            surface.SetDrawColor( 255, 44, 44, 255 )
+            surface.SetDrawColor(255,255,255)
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
 
         function ForwardButton:DoClick()
-            CurrentPlayer = CurrentPlayer + 1
-            if CurrentPlayer > #AlivePlayers then
-                CurrentPlayer = 1
+            if CurrentPlayer >= #AlivePlayers then
+                CurrentPlayer = 0
+            else
+                CurrentPlayer = CurrentPlayer + 1
             end
         end
         
@@ -79,13 +81,13 @@ local function SpectateGui(open)
         PlayerButton:SetSize((ForwardButton.x - 39) - (BackButton.x + 39), 100)
         PlayerButton:SetFont("LabelFont")
         PlayerButton:Center()
-        PlayerButton:SetColor(Color( 255,255,255 ))
+        PlayerButton:SetColor(Color(255,255,255))
 
         PlayerButton.Paint = function(self,w,h)
-            surface.SetDrawColor( 255, 44, 44, 255 )
+            surface.SetDrawColor(255,255,255)
             surface.DrawOutlinedRect(0,0,w,h,2)
 
-            if IsValid(AlivePlayers[CurrentPlayer]) then
+            if AlivePlayers[CurrentPlayer] then
                 PlayerButton:SetText(AlivePlayers[CurrentPlayer]:Nick())
             else
                 PlayerButton:SetText("No alive players")
@@ -109,12 +111,12 @@ end
 hook.Add("Think", "GetAlivePlayers", function()
     for k,v in pairs(player.GetAll()) do
         if v:Alive() && !table.HasValue(AlivePlayers, v) then
-            table.insert(AlivePlayers, v)
+            table.insert(AlivePlayers, #AlivePlayers, v)
         end
     end
     for i,p in pairs(AlivePlayers) do
-        if IsValid(p) && !p:Alive() then
-            if i == 1 then table.Empty(AlivePlayers) return end
+        if !p:Alive() then
+            if i == 0 then table.Empty(AlivePlayers) return end
             table.remove(AlivePlayers, i)
         end
     end

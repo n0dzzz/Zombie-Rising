@@ -4,7 +4,6 @@ AddCSLuaFile( "cl_init.lua" )
 include( "shared.lua" )
 
 hook.Add("PlayerInitialSpawn", "InitSpawn", function(ply)
-
     if (ply:GetPData("PlayerRank") == nil) then
 		ply:SetNWInt("PlayerRank", 1)
 	else
