@@ -5,6 +5,13 @@ include( "shared.lua" )
 
 local ScoreboardBase
 
+surface.CreateFont("HUDFont", {
+	font = "Segoe UI Bold",
+	size = 24,
+	antialias = true,
+	outline = true,
+})
+
 local function CreateScoreboard(ToggleScoreboard)
     if ToggleScoreboard then
         ScoreboardBase = vgui.Create("DFrame")
@@ -15,13 +22,15 @@ local function CreateScoreboard(ToggleScoreboard)
         ScoreboardBase:SetDraggable(false)
         ScoreboardBase:MakePopup()
         ScoreboardBase.Paint = function(self,w,h)
-            surface.SetDrawColor(0,0,0,200)
+            surface.SetDrawColor(45,45,45,225)
             surface.DrawRect(0, 0, w, h)
-            draw.SimpleText("Name", "TargetID", w * 0.153 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            draw.SimpleText("Money", "TargetID", w * 0.384 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            draw.SimpleText("Prestige", "TargetID", w * 0.587 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            draw.SimpleText("Rank", "TargetID", w * 0.735 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-            draw.SimpleText("Ping", "TargetID", w * 0.868 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            surface.SetDrawColor(222,16,50)
+            surface.DrawOutlinedRect(0, 0, w, h)
+            draw.SimpleText("Name", "HUDFont", w * 0.153 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Money", "HUDFont", w * 0.384 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Prestige", "HUDFont", w * 0.587 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Rank", "HUDFont", w * 0.735 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Ping", "HUDFont", w * 0.868 , h * 0.03 , Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
 
         local ypos = 0
@@ -42,13 +51,13 @@ local function CreateScoreboard(ToggleScoreboard)
             if v:GetNWString("BackgroundColor") == "" then v:SetNWString("BackgroundColor", tostring(ColorRand())) end
             PlayerPanel.Paint = function(self,w,h)
                 if IsValid(v) then
-                    surface.SetDrawColor(string.ToColor(v:GetNWString("BackgroundColor")))
+                    surface.SetDrawColor(222,16,50)
                     surface.DrawRect(0, 0, w, h)
-                    draw.SimpleText(PlayerName, "TargetID", w * 0.153 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText("$"..tostring(PlayerMoney), "TargetID", w * 0.384 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText(PlayerPrestige, "TargetID", w * 0.587 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText(PlayerRank, "TargetID", w * 0.735 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-                    draw.SimpleText(PlayerPing, "TargetID", w * 0.868 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerName, "HUDFont", w * 0.153 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText("$"..tostring(PlayerMoney), "HUDFont", w * 0.384 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerPrestige, "HUDFont", w * 0.587 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerRank, "HUDFont", w * 0.735 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+                    draw.SimpleText(PlayerPing, "HUDFont", w * 0.868 , h /2 , Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
                 end
             end

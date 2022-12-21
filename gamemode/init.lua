@@ -15,13 +15,10 @@ util.AddNetworkString("PlayerDeath")
 util.AddNetworkString("PlayerRespawn")
 
 CreateConVar("RoundNumberVar", 1)
+
 hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
    ply:UnSpectate()
    ply:StripWeapons()
-
-   ply:SetSlowWalkSpeed(100)
-   ply:SetWalkSpeed(150)
-   ply:SetRunSpeed(175)
 
    local sboxweapons = GetConVar("sbox_weapons")
    sboxweapons:SetBool(false)
@@ -29,6 +26,10 @@ hook.Add("PlayerSpawn", "SpawnStartup", function(ply)
    GetConVar("mgbase_sv_customization"):SetBool(false)
    ply:Give("mg_m1911") 
    ply:Give("item_ammo_pistol_large") 
+
+	ply:SetRunSpeed(300)
+	ply:SetWalkSpeed(100)
+	ply:SetJumpPower(100)
 
    if (ply:GetNWInt("PlayerPrestige") >= 1) then
       ply:SetArmor(25)

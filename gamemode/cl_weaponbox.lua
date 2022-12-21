@@ -5,10 +5,8 @@ local WeaponBox = "models/items/ammocrate_ar2.mdl"
 
 local Items = 
 {
-    {"models/viper/mw/weapons/v_dblmg.mdl","","Mini Gun", 500000},
-    {"models/Items/HealthKit.mdl","","Health Kit",1500},
-    {"models/Items/battery.mdl","item_battery","Armor",2000},
-    {"models/props/cs_assault/Money.mdl","","Customization", 75000}, -- maybe should be 100k
+    {"models/Items/HealthKit.mdl","","Health Kit",5000},
+    {"models/Items/battery.mdl","item_battery","Armor",10000},
 
     -- Health
 
@@ -21,14 +19,14 @@ local Items =
 
     -- Ammo
 
-    {"models/viper/mw/weapons/w_p320.mdl","mg_p320","P320", 4000},
-    {"models/viper/mw/weapons/w_glock.mdlq","mg_glock","Glock", 8000},
-    {"models/viper/mw/weapons/w_deagle.mdl","mg_deagle","Deagle", 10000},
+    {"models/viper/mw/weapons/v_p320.mdl","mg_p320","P320", 4000},
+    {"models/viper/mw/weapons/v_glock.mdl","mg_glock","Glock", 8000},
+    {"models/viper/mw/weapons/v_deagle.mdl","mg_deagle","Deagle", 10000},
 
     -- Pistols
 
-    {"models/viper/mw/weapons/v_mpapa5.mdl.mdl","mg_mpapa5","MP5", 15000},
-    {"models/viper/mw/weapons/w_augolf.mdl","mg_augolf","Aug",20000},
+    {"models/viper/mw/weapons/v_mpapa5.mdl","mg_mpapa5","MP5", 15000},
+    {"models/viper/mw/weapons/v_augolf.mdl","mg_augolf","Aug",20000},
     {"models/viper/mw/attachments/uzulu/attachment_vm_sm_uzulu_receiver.mdl","mg_uzulu","Uzi", 25000},
     {"models/viper/mw/weapons/v_mpapa7.mdl","mg_mpapa7","MP7", 30000},
     {"models/viper/mw/weapons/v_secho.mdl","mg_secho","Scorpion", 35000},
@@ -36,11 +34,11 @@ local Items =
     
     -- Smgs
 
-    {"models/viper/mw/weapons/w_akilo47.mdl","mg_augolf","AK47", 50000},
+    {"models/viper/mw/weapons/v_akilo47.mdl","mg_augolf","AK47", 50000},
     {"models/viper/mw/weapons/v_falima.mdl","mg_falima","FAL", 60000},
     {"models/viper/mw/weapons/v_mike4.mdl","mg_mike4","M4A1", 85000},
     {"models/viper/mw/weapons/v_scharlie.mdl","mg_scharlie","FN Scar 17", 10000},
-    {"models/viper/mw/weapons/w_tango21.mdl","mg_tango21","RAM-7", 125000},
+    {"models/viper/mw/weapons/v_tango21.mdl","mg_tango21","RAM-7", 125000},
 
     -- ARs
 
@@ -51,11 +49,15 @@ local Items =
     -- Rifles
 
     {"models/viper/mw/weapons/v_romeo870.mdl","mg_romeo870","Romeo 870", 100000},
-    {"models/viper/mw/weapons/w_dpapa12.mdlq","mg_dpapa12qq","R9-0", 175000},
-    {"models/viper/mw/weapons/w_oscar12.mdl","mg_aalpha12","Jak-12", 235000},
+    {"models/viper/mw/weapons/v_dpapa12.mdl","mg_dpapa12","R9-0", 175000},
+    {"models/viper/mw/weapons/v_oscar12.mdl","mg_aalpha12","Jak-12", 235000},
 
     -- Shotguns
 
+    {"models/viper/mw/weapons/v_dblmg.mdl","","Mini Gun", 500000},
+    {"models/props/cs_assault/Money.mdl","","Customization", 100000}, -- maybe should be 100k
+
+    -- Specials
 }
 
 local LabelFont = surface.CreateFont("LabelFont", {
@@ -70,12 +72,14 @@ local function CreateGui()
     local Frame = vgui.Create("DFrame")
     Frame:SetTitle("")
     Frame:SetDraggable(false)
-    Frame:SetSize(500,500)
+    Frame:SetSize(800,500)
     Frame:Center()
     Frame:MakePopup()
     Frame.Paint = function(self, w, h)
-        surface.SetDrawColor(Color(0,0,0))
+        surface.SetDrawColor(Color(45,45,45))
         surface.DrawRect(0, 0, w, h)
+        surface.SetDrawColor(Color(222,16,50))
+        surface.DrawOutlinedRect(0, 0, w, h)
     end
 
     function Frame:OnClose()
@@ -90,7 +94,7 @@ local function CreateGui()
 
         local ItemPanel = vgui.Create("DPanel", DScrollPanel)
         ItemPanel:SetPos(0,YPos)
-        ItemPanel:SetBackgroundColor(Color(255,255,255))
+        ItemPanel:SetBackgroundColor(Color(45,45,45))
         ItemPanel:SetSize(Frame:GetWide() -10,Frame:GetTall() * 0.2)
         local model = vgui.Create("DModelPanel", ItemPanel)
         model:SetPos(10,0)
@@ -106,7 +110,7 @@ local function CreateGui()
         local ItemLabel = vgui.Create("DLabel", ItemPanel)
         ItemLabel:SetPos((ItemPanel:GetWide() * 0.5) - 80, 0)
         ItemLabel:SetSize(1000,100)
-        ItemLabel:SetColor(Color(0,0,0))
+        ItemLabel:SetColor(Color(255,255,255))
         ItemLabel:SetFont("LabelFont")
         ItemLabel:SetText(tostring(v[3]))
 
@@ -115,10 +119,10 @@ local function CreateGui()
         ItemButton:SetPos(ItemPanel:GetWide() - 140, 30)
         ItemButton:SetSize(95,40)
         ItemButton:SetText("$"..tostring(v[#v]))
-        ItemButton:SetColor(Color(0,150,53))
+        ItemButton:SetColor(Color(222,16,50))
         ItemButton.Paint = function(self, w, h)
-            ItemButton:SetColor(Color(0,150,53))
-            surface.SetDrawColor(Color(0,150,53))
+            ItemButton:SetColor(Color(222,16,50))
+            surface.SetDrawColor(Color(222,16,50))
             surface.DrawOutlinedRect(0, 0, w, h,2)
             
             if self:IsHovered() then

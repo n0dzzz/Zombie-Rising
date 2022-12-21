@@ -15,7 +15,6 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
     local Spawns = ents.FindByClass("info_player_start")
     local Ran = math.random(#Spawns)
     local Zombie = ents.Create("npc_vj_zs_zombie")
-
     if (!IsValid(Zombie))  then return end
 
     Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
@@ -27,15 +26,16 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
         SpawnDelay = 1.5
         Zombine:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
         Zombine:Spawn()
-        -- Zombine:PointAtEntity(Entity(1))
-        -- Zombine:PointAtEntity(Entity(2))
     end
     if(RoundNumber >= 10) then 
         local Poison = ents.Create("npc_vj_zs_poisonzombie")
-        Poison:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 100, 125)))
+        Poison:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
         Poison:Spawn()
-        -- Poison:PointAtEntity(Entity(1))
-        -- Poison:PointAtEntity(Entity(2))
+    end
+    if(RoundNumber >= 5) then 
+        local FastZombie = ents.Create("npc_vj_zs_fastzombie")
+        FastZombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
+        FastZombie:Spawn()
     end
     
     Zombies = Zombies + 1
