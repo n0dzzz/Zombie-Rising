@@ -4,7 +4,7 @@ AddCSLuaFile( "cl_weaponbox.lua" )
 AddCSLuaFile( "cl_hud.lua" )
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "cl_spectatehud.lua" )
-
+AddCSLuaFile( "cl_hit.lua" )
 
 GM.Name = "Zombie Surival"
 GM.Author = "GrandmaSocks"
