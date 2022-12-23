@@ -17,29 +17,40 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
     local Zombie = ents.Create("npc_vj_zs_zombie")
     if (!IsValid(Zombie))  then return end
 
-    Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
-    Zombie:Spawn()    
-
     if(RoundNumber >= 15) then
         local Zombine = ents.Create("npc_vj_zs_zombine")
 
         SpawnDelay = 1.5
-        Zombine:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
+        Zombine:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 900, 1000), 0))
         Zombine:Spawn()
+        Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 50, 75), 0))
+        Zombie:Spawn()  
     end
     if(RoundNumber >= 10) then 
         local Poison = ents.Create("npc_vj_zs_poisonzombie")
-        Poison:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
+
+        Poison:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 400, 450), 0))
         Poison:Spawn()
+        Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 50, 75), 0))
+        Zombie:Spawn()  
     end
     if(RoundNumber >= 5) then 
         local FastZombie = ents.Create("npc_vj_zs_fastzombie")
-        FastZombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, 0, math.random( 0, 25)))
+
+        FastZombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 500, 800), 0))
         FastZombie:Spawn()
+        Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 50, 75), 0))
+        Zombie:Spawn()  
+    end
+    if (RoundNumber < 5) then
+        Zombie:SetPos(Spawns[Ran]:GetPos() + Vector(0, math.random( 125, 175), 0))
+        Zombie:Spawn()  
     end
     
     Zombies = Zombies + 1
 end)
+
+
 
 hook.Add("Think", "CheckZombies", function()
     for k,v in pairs(player.GetAll()) do

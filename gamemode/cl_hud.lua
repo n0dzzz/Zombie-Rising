@@ -56,7 +56,12 @@ hook.Add("HUDPaint", "HUDHOOK", function()
 
 		draw.RoundedBox(4, 200, 0, surface.ScreenWidth() - 200, 50, Color(222,16,50))
 		draw.RoundedBox(4 + 3, 200 + 2.5, 2, surface.ScreenWidth() * (LocalPlayer():GetNWInt("PlayerRankProgress") / LocalPlayer():GetNWInt("MaxPlayerRankProgress")) , 50 - 4, Color(45,45,45, 177))
-		draw.SimpleText(LocalPlayer():GetNWInt("PlayerRankProgress").. " / " .. LocalPlayer():GetNWInt("MaxPlayerRankProgress"), "HUDFont", surface.ScreenWidth() *  0.55, 10, color_white, TEXT_ALIGN_CENTER )
+
+		if (LocalPlayer():GetNWInt("PlayerRank") >= 100) then 
+			draw.SimpleText("Prestige Ready [E]", "HUDFont", surface.ScreenWidth() *  0.54, 10, color_white, TEXT_ALIGN_CENTER )
+		else
+			draw.SimpleText(LocalPlayer():GetNWInt("PlayerRankProgress").. " / " .. LocalPlayer():GetNWInt("MaxPlayerRankProgress"), "HUDFont", surface.ScreenWidth() *  0.55, 10, color_white, TEXT_ALIGN_CENTER )
+		end
 
 		-- XP and Round
 
