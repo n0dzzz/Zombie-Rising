@@ -3,15 +3,19 @@ include( "cl_hud.lua" )
 include( "cl_weaponbox.lua" )
 include( "cl_spectatehud.lua" )
 include( "cl_scoreboard.lua" )
-include( "cl_hit.lua" )
-
+include( "cl_hit.lua")
 -------------------------- Setup
 
 print("[ " .. util.DateStamp() .. " ] " .. "Zombie Surival Game Started on map " .. game.GetMap())
 
+timer.Create("GameClean", 600, 0, function()
+    LocalPlayer():ChatPrint("Game is Wiping/Cleaning to Prevent a Crash")
+    RunConsoleCommand("gmod_admin_cleanup")
+end)
+
 timer.Create("Annoucments", 200, 1, function()
 
-    print( "Welcome to Zombie Surival still in Development" )
+    print( "Welcome to Zombie Rising" )
 
 end)
 
@@ -86,6 +90,8 @@ function ZombieLevelRender()
  
     if (LocalPlayer():GetEyeTrace().Entity:GetClass() == "npc_vj_zs_zombie") then
         name = "Zombie"
+    elseif (LocalPlayer():GetEyeTrace().Entity:GetClass() == "npc_vj_zs_fastzombie") then
+        name = "Fast Zombie"
     elseif (LocalPlayer():GetEyeTrace().Entity:GetClass() == "npc_vj_zs_poisonzombie") then
         name = "Poison Zombie"
     elseif (LocalPlayer():GetEyeTrace().Entity:GetClass() == "npc_vj_zs_zombine") then

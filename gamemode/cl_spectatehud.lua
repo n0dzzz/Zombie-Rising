@@ -32,9 +32,9 @@ local function SpectateGui(open)
 
         SpectateFrame.Paint = function(self,w,h)
 
-            surface.SetDrawColor(0,0,0)
+            surface.SetDrawColor(45,45,45)
             surface.DrawRect(0, 0, w, h) 
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor(222,16,50)
             surface.DrawOutlinedRect(0,0, w, h,2)
         end
 
@@ -45,7 +45,7 @@ local function SpectateGui(open)
         BackButton:SetFont("LabelFont")
 
         BackButton.Paint = function(self,w,h)
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor(222,16,50)
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
 
@@ -65,7 +65,7 @@ local function SpectateGui(open)
         ForwardButton:SetFont("LabelFont")
 
         ForwardButton.Paint = function(self,w,h)
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor(222,16,50)
             surface.DrawOutlinedRect(0,0,w,h,2)
         end
 
@@ -84,7 +84,7 @@ local function SpectateGui(open)
         PlayerButton:SetColor(Color(255,255,255))
 
         PlayerButton.Paint = function(self,w,h)
-            surface.SetDrawColor(255,255,255)
+            surface.SetDrawColor(222,16,50)
             surface.DrawOutlinedRect(0,0,w,h,2)
 
             if AlivePlayers[CurrentPlayer] then

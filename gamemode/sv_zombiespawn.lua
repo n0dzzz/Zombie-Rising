@@ -9,7 +9,7 @@ local ZombieDamage = 5
 local ZombieHealth = 5
 local MaxZombies = 10 
 local Zombies = 0
-local SpawnDelay = 3
+local SpawnDelay = 2
 
 timer.Create("ZombieSpawn", SpawnDelay, 0, function()
     local Spawns = ents.FindByClass("info_player_start")
@@ -50,37 +50,21 @@ timer.Create("ZombieSpawn", SpawnDelay, 0, function()
     Zombies = Zombies + 1
 end)
 
+timer.Create("RoundIncrease", 75, 0, function()
 
-
-hook.Add("Think", "CheckZombies", function()
     for k,v in pairs(player.GetAll()) do
-        if v:GetNWInt("RoundNumberVar") != RoundNumber then
-            v:SetNWInt("RoundNumberVar",RoundNumber)
+        RoundNumber = RoundNumber + 1
+        v:SetNWInt("RoundNumberVar", RoundNumber)
+    end
+
+    for k,v in pairs(player.GetAll()) do
+        if !v:Alive() then
+            v:Spawn()
         end
     end
 
-    if (Zombies == MaxZombies) then  
-        timer.Pause("ZombieSpawn")        
-        local ZombieLeft = 0
-        for k,v in pairs(ents.GetAll()) do
-            if v:GetClass() == "npc_zombie" then 
-                ZombieLeft = ZombieLeft + 1
-            end
-        end
-        if ZombieLeft == 0 then
-            Zombies = 0
-            RoundNumber = RoundNumber + 1
-            for k,v in pairs(player.GetAll()) do
-                if !v:Alive() then
-                    v:Spawn()
-                end
-            end
+    net.Start("RoundChange")
+        net.WriteInt(RoundNumber,32)
+    net.Broadcast()
 
-            net.Start("RoundChange")
-                net.WriteInt(RoundNumber,32)
-            net.Broadcast()
-            timer.UnPause("ZombieSpawn")
-        end
-            
-    end
 end)

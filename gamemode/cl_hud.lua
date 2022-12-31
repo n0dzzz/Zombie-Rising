@@ -9,6 +9,12 @@ surface.CreateFont("HUDFont", {
 	outline = true,
 })
 
+surface.CreateFont("HUDFontObjectives", {
+	font = "Segoe UI Bold",
+	size = 13,
+	antialias = true,
+})
+
 surface.CreateFont("HUDFontWeapon", {
 	font = "Segoe UI Bold",
 	size = 34,
@@ -31,8 +37,8 @@ end )
 hook.Add("HUDPaint", "HUDHOOK", function()
 
 	if (LocalPlayer():Alive()) then
-		draw.RoundedBox(4, 10, surface.ScreenHeight() * 0.77, surface.ScreenWidth() * 0.2, surface.ScreenHeight() * 0.19, Color(222,16,50))
-		draw.RoundedBox(4 + 4, 10 + 2.5, surface.ScreenHeight() * 0.767 + 6, surface.ScreenWidth() * 0.2 - 5, surface.ScreenHeight() * 0.19 - 5, Color(45,45,45))
+		draw.RoundedBox(4, 10, surface.ScreenHeight() * 0.77, surface.ScreenWidth() * 0.16, surface.ScreenHeight() * 0.19, Color(222,16,50))
+		draw.RoundedBox(4 + 4, 10 + 2.5, surface.ScreenHeight() * 0.767 + 6, surface.ScreenWidth() * 0.16 - 5, surface.ScreenHeight() * 0.19 - 5, Color(45,45,45))
 
 		draw.SimpleText(LocalPlayer():GetName(), "HUDFont", 15, surface.ScreenHeight() * 0.775, color_white )
 		draw.SimpleText("Rank: " .. LocalPlayer():GetNWInt("PlayerRank"), "HUDFont", 15, surface.ScreenHeight() * 0.795, color_white )
@@ -50,9 +56,14 @@ hook.Add("HUDPaint", "HUDHOOK", function()
 
 		-- Main Hud
 
-		draw.RoundedBox(4, 0, 0, 200, 50, Color(222,16,50))
-		draw.RoundedBox(4 + 3, 0 + 2.5, 2, 200 - 4, 50 - 4, Color(45,45,45))
-		draw.SimpleText("Round: " .. tostring(LocalPlayer():GetNWInt("RoundNumberVar")), "HUDFont", 100, 10, color_white, TEXT_ALIGN_CENTER )
+		draw.RoundedBox(4, 0, 0, 200, 250, Color(222,16,50))
+		draw.RoundedBox(4 + 3, 0 + 2.5, 2, 200 - 4, 250 - 4, Color(45,45,45))
+		draw.RoundedBox(4, 0, surface.ScreenHeight() * 0.04, 200, 5, Color(222,16,50))
+		draw.SimpleText("Round: " .. tostring(LocalPlayer():GetNWInt("RoundNumberVar")), "HUDFont", 10, 10, color_white )
+		draw.SimpleText("Objectives", "HUDFont", 10, surface.ScreenHeight() * 0.06, color_white )
+		draw.SimpleText("• Find Intel From Zombines (0 / 5)", "HUDFontObjectives", 10, surface.ScreenHeight() * 0.09, color_white )
+		draw.SimpleText("• Collect Money ($" .. LocalPlayer():GetNWInt("MoneyAmount") .. " / $500000)", "HUDFontObjectives", 10, surface.ScreenHeight() * 0.11, color_white )
+		draw.SimpleText("• Survive Rounds (" .. LocalPlayer():GetNWInt("RoundNumberVar") .. " / 50)", "HUDFontObjectives", 10, surface.ScreenHeight() * 0.13, color_white )
 
 		draw.RoundedBox(4, 200, 0, surface.ScreenWidth() - 200, 50, Color(222,16,50))
 		draw.RoundedBox(4 + 3, 200 + 2.5, 2, surface.ScreenWidth() * (LocalPlayer():GetNWInt("PlayerRankProgress") / LocalPlayer():GetNWInt("MaxPlayerRankProgress")) , 50 - 4, Color(45,45,45, 177))
@@ -66,11 +77,11 @@ hook.Add("HUDPaint", "HUDHOOK", function()
 		-- XP and Round
 
 		if (IsValid(LocalPlayer():GetActiveWeapon())) then
-			draw.RoundedBox(4, surface.ScreenWidth() * 0.815, surface.ScreenHeight() * 0.77, surface.ScreenWidth() * 0.175, surface.ScreenHeight() * 0.19, Color(222,16,50))
-			draw.RoundedBox(4 + 4, surface.ScreenWidth() * 0.815 + 2.5, surface.ScreenHeight() * 0.767 + 6, surface.ScreenWidth() * 0.175 - 5, surface.ScreenHeight() * 0.19 - 5, Color(45,45,45))
+			draw.RoundedBox(4, surface.ScreenWidth() * 0.815, surface.ScreenHeight() * 0.81, surface.ScreenWidth() * 0.175, surface.ScreenHeight() * 0.15, Color(222,16,50))
+			draw.RoundedBox(4 + 4, surface.ScreenWidth() * 0.815 + 2.5, surface.ScreenHeight() * 0.807 + 6, surface.ScreenWidth() * 0.175 - 5, surface.ScreenHeight() * 0.15 - 5, Color(45,45,45))
 
-			draw.SimpleText(LocalPlayer():GetActiveWeapon():GetPrintName(), "HUDFontWeapon", surface.ScreenWidth() * 0.9, surface.ScreenHeight() * 0.83, color_white, TEXT_ALIGN_CENTER )
-			draw.DrawText( LocalPlayer():GetActiveWeapon():Clip1() .. " / " .. LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType()), "HUDFontWeapon", surface.ScreenWidth() * 0.9, surface.ScreenHeight() * 0.86, Color(255,255,255,255), TEXT_ALIGN_CENTER)
+			draw.SimpleText(LocalPlayer():GetActiveWeapon():GetPrintName(), "HUDFontWeapon", surface.ScreenWidth() * 0.9, surface.ScreenHeight() * 0.85, color_white, TEXT_ALIGN_CENTER )
+			draw.DrawText( LocalPlayer():GetActiveWeapon():Clip1() .. " / " .. LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType()), "HUDFontWeapon", surface.ScreenWidth() * 0.9, surface.ScreenHeight() * 0.885, Color(255,255,255,255), TEXT_ALIGN_CENTER)
 		end
 
 		-- Weapon
