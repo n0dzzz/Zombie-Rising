@@ -3,6 +3,7 @@ include( "cl_hud.lua" )
 include( "cl_weaponbox.lua" )
 include( "cl_spectatehud.lua" )
 include( "cl_scoreboard.lua" )
+include( "cl_hit.lua" )
 
 -------------------------- Setup
 
