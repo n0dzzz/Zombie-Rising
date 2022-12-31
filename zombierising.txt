@@ -1,0 +1,12 @@
+"zombierising"
+{
+	"base"		"default"
+	"title"		"Zombie Rising"
+	"maps"		"^zr_"
+	"menusystem"	"1"
+
+	"settings"
+	{
+
+	}
+}
