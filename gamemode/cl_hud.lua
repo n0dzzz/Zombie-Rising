@@ -1,6 +1,6 @@
-AddCSLuaFile"cl_init.lua"
-AddCSLuaFile"shared.lua"
-include"shared.lua"
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
+include("shared.lua")
 
 surface.CreateFont("HUDFont", {
 	font = "Segoe UI Bold",
