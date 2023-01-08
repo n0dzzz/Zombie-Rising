@@ -1,18 +1,21 @@
+include( "shared.lua" )
+
+local ZombiesTable = {
+    ["npc_headcrab"] = 50,
+    ["npc_zombie"] = 100,
+    ["npc_fastzombie"] = 200,
+    ["npc_poisonzombie"] = 300
+}
+
+local function CheckTableValue(ent)
+    return ZombiesTable[ent] ~= nil
+end
+
 hook.Add("OnNPCKilled", "OnKill", function(npc, attacker, inflictor)
-    if npc:GetClass() == "npc_vj_zs_zombie" then
-        attacker:SetNWInt("CurrentMoney",100)
-    end
+    attacker:SetNWInt("CurrentMoney",0)
 
-    if npc:GetClass() == "npc_vj_zs_fastzombie" then
-        attacker:SetNWInt("CurrentMoney",200)
-    end
-
-    if npc:GetClass() == "npc_vj_zs_poisonzombie" then
-        attacker:SetNWInt("CurrentMoney",300)
-    end
-
-    if npc:GetClass() == "npc_vj_zs_zombine" then
-        attacker:SetNWInt("CurrentMoney",400)
+    if CheckTableValue(npc:GetClass()) then
+        attacker:SetNWInt("CurrentMoney",ZombiesTable[npc:GetClass()])
     end
 
     if(attacker:GetNWInt("PlayerPrestige") >= 10) then
